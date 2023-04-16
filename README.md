@@ -39,7 +39,7 @@ osc.sendMessage('/address/', ['string value", 1, false, 0.5]);
 ```javascript
 import { NativeEventEmitter } from 'react-native';
 
-import osc from 'react-native-osc';
+import osc from 'expo-osc';
 
 // Create an event emiter sending the native osc module as parameter 
 const eventEmitter = new NativeEventEmitter(osc);
