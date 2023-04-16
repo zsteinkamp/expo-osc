@@ -1,39 +1,20 @@
 {
-  "name": "react-native-osc",
+  "name": "expo-osc",
   "title": "Open Sound Control for React Native",
   "version": "0.0.3",
-  "description": "Open Sound Control for React Native (iOS & Android).",
+  "description": "Open Sound Control for Expo",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/luiscript/react-native-osc.git",
-    "baseUrl": "https://github.com/luiscript/react-native-osc"
-  },
+  "license": "MIT",
   "keywords": [
-    "react-native",
+    "expo-osc",
     "react-native-osc",
+    "osc",
     "open",
     "sound",
-    "control",
-    "osc",
-    "message"
+    "control"
   ],
-  "author": {
-    "name": "Luis Fernando García Pérez",
-    "email": "contacto@luiscript.com"
-  },
-  "license": "MIT",
-  "licenseFilename": "LICENSE",
-  "readmeFilename": "README.md",
   "peerDependencies": {
-    "react": "^16.8.1",
-    "react-native": ">=0.60.0-rc.0 <1.0.x"
-  },
-  "devDependencies": {
-    "react": "^16.9.0",
-    "react-native": "^0.61.5"
+    "react": "*",
+    "react-native": "*"
   }
 }
