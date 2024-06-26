@@ -120,28 +120,32 @@ afterEvaluate { project ->
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            from components.java
-            artifact androidSourcesJar
-            artifact androidJavadocJar
+            // Use the default Android component
+            afterEvaluate {
+                from components.findByName("release")
 
-            pom.withXml {
-                def packageJson = new groovy.json.JsonSlurper().parseText(file('../package.json').text)
-                def root = asNode()
-                root.appendNode('name', packageJson.title)
-                root.appendNode('description', packageJson.description)
-                root.appendNode('url', packageJson.repository.baseUrl)
+                artifact androidSourcesJar
+                artifact androidJavadocJar
 
-                def licensesNode = root.appendNode('licenses')
-                licensesNode.appendNode('license').with {
-                    appendNode('name', packageJson.license)
-                    appendNode('url', packageJson.repository.baseUrl + '/blob/master/' + packageJson.licenseFilename)
-                    appendNode('distribution', 'repo')
-                }
+                pom.withXml {
+                    def packageJson = new groovy.json.JsonSlurper().parseText(file('../package.json').text)
+                    def root = asNode()
+                    root.appendNode('name', packageJson.title)
+                    root.appendNode('description', packageJson.description)
+                    root.appendNode('url', packageJson.repository.baseUrl)
 
-                def developersNode = root.appendNode('developers')
-                developersNode.appendNode('developer').with {
-                    appendNode('id', packageJson.author.username)
-                    appendNode('name', packageJson.author.name)
+                    def licensesNode = root.appendNode('licenses')
+                    licensesNode.appendNode('license').with {
+                        appendNode('name', packageJson.license)
+                        appendNode('url', packageJson.repository.baseUrl + '/blob/master/' + packageJson.licenseFilename)
+                        appendNode('distribution', 'repo')
+                    }
+
+                    def developersNode = root.appendNode('developers')
+                    developersNode.appendNode('developer').with {
+                        appendNode('id', packageJson.author.username)
+                        appendNode('name', packageJson.author.name)
+                    }
                 }
             }
         }
