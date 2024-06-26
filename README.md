@@ -2,14 +2,15 @@
 
 Open Sound Control support for sending and receiving OSC messages in Expo (React Native)
 
-On the native side: 
+On the native side:
+
 - [JavaOSC](https://github.com/hoijui/JavaOSC/) for Android
 - [SwiftOSC](https://github.com/ExistentialAudio/SwiftOSC) for iOS
 
 ## Getting started
 
 ```sh
-npm i vine77/expo-osc
+npm i aleruffo/expo-osc
 ```
 
 ## Usage
@@ -37,28 +38,28 @@ osc.sendMessage('/address/', ['string value", 1, false, 0.5]);
 ### Receive OSC messages (OSC server)
 
 ```javascript
-import { NativeEventEmitter } from 'react-native';
+import { NativeEventEmitter } from "react-native";
 
-import osc from 'expo-osc';
+import osc from "expo-osc";
 
-// Create an event emiter sending the native osc module as parameter 
+// Create an event emiter sending the native osc module as parameter
 const eventEmitter = new NativeEventEmitter(osc);
 
 // Subscribe to GotMessage event to receive OSC messages
-eventEmitter.addListener('GotMessage', (oscMessage) => {
-  console.log('message: ', oscMessage);
+eventEmitter.addListener("GotMessage", (oscMessage) => {
+  console.log("message: ", oscMessage);
 });
 
 const portIn = 9999;
 
-// iOS can listen to specific "/adress/", leave it emtpy to listen to all 
-const addressToListen = '';
+// iOS can listen to specific "/adress/", leave it emtpy to listen to all
+const addressToListen = "";
 
 // Start listening to OSC messages on iOS
 osc.createServer(addressToListen, portIn);
 
 // Android
-osc.createServer(portIn) 
+osc.createServer(portIn);
 
 // To receive OSC messages your client should be addressing your device IP address
 ```

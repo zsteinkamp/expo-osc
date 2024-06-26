@@ -1,7 +1,7 @@
 {
   "name": "expo-osc",
   "title": "Open Sound Control for React Native",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Open Sound Control for Expo",
   "main": "index.js",
   "license": "MIT",

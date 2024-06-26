@@ -120,32 +120,30 @@ afterEvaluate { project ->
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            // Use the default Android component
-            afterEvaluate {
-                from components.findByName("release")
+            // Use the default Android AAR component
+            from components["release"]
 
-                artifact androidSourcesJar
-                artifact androidJavadocJar
+            artifact androidSourcesJar
+            artifact androidJavadocJar
 
-                pom.withXml {
-                    def packageJson = new groovy.json.JsonSlurper().parseText(file('../package.json').text)
-                    def root = asNode()
-                    root.appendNode('name', packageJson.title)
-                    root.appendNode('description', packageJson.description)
-                    root.appendNode('url', packageJson.repository.baseUrl)
+            pom.withXml {
+                def packageJson = new groovy.json.JsonSlurper().parseText(file('../package.json').text)
+                def root = asNode()
+                root.appendNode('name', packageJson.title)
+                root.appendNode('description', packageJson.description)
+                root.appendNode('url', packageJson.repository.baseUrl)
 
-                    def licensesNode = root.appendNode('licenses')
-                    licensesNode.appendNode('license').with {
-                        appendNode('name', packageJson.license)
-                        appendNode('url', packageJson.repository.baseUrl + '/blob/master/' + packageJson.licenseFilename)
-                        appendNode('distribution', 'repo')
-                    }
+                def licensesNode = root.appendNode('licenses')
+                licensesNode.appendNode('license').with {
+                    appendNode('name', packageJson.license)
+                    appendNode('url', packageJson.repository.baseUrl + '/blob/master/' + packageJson.licenseFilename)
+                    appendNode('distribution', 'repo')
+                }
 
-                    def developersNode = root.appendNode('developers')
-                    developersNode.appendNode('developer').with {
-                        appendNode('id', packageJson.author.username)
-                        appendNode('name', packageJson.author.name)
-                    }
+                def developersNode = root.appendNode('developers')
+                developersNode.appendNode('developer').with {
+                    appendNode('id', packageJson.author.username)
+                    appendNode('name', packageJson.author.name)
                 }
             }
         }
