@@ -47,18 +47,13 @@ import SwiftOSC
                     message.add(someDouble)
                 case let someBool as Bool:
                     message.add(someBool)
+                case let someString as String:
+                    message.add(someString)
                 default:
                     print("data not supported")
             }
         }
         client.send(message)
-    }
-    
-    @objc(createServer:port:)
-    func createServer(address: String, port: NSNumber) -> Void {
-        server = OSCServer(address: address, port: port.intValue)
-        server.delegate = self
-        server.start()
     }
     
     @objc(createServer:)
