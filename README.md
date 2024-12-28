@@ -70,7 +70,7 @@ i Integer: two’s complement int32.
 
 f Float: IEEE float32.
 
-~~s NULL-terminated ASCII string.~~
+s NULL-terminated ASCII string.
 
 ~~b Blob, (aka byte array) with size.~~
 
