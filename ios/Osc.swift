@@ -30,10 +30,10 @@ import SwiftOSC
     var client:OSCClient!
     var server:OSCServer!
     
-    func getClient(Void) -> OSCClient {
+    func getClient() -> OSCClient {
         return client
     }
-    func getServer(Void) -> OSCServer {
+    func getServer() -> OSCServer {
         return Server
     }
 
