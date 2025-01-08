@@ -30,13 +30,6 @@ import SwiftOSC
     var client:OSCClient!
     var server:OSCServer!
     
-    func getClient() -> OSCClient {
-        return client
-    }
-    func getServer() -> OSCServer {
-        return server
-    }
-
     @objc(createClient:port:)
     func createClient(address: String, port: NSNumber) -> Void {
             client = OSCClient(address: address, port: port.intValue)
