@@ -34,7 +34,7 @@ import SwiftOSC
         return client
     }
     func getServer() -> OSCServer {
-        return Server
+        return server
     }
 
     @objc(createClient:port:)
