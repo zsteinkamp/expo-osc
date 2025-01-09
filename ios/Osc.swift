@@ -35,7 +35,7 @@ import SwiftOSC
         client = OSCClient(address: address, port: port.intValue)
     }
     
-    @objc(restartClient:)
+    @objc(restartClient)
     func restartClient() -> Void {
         client.restart()
     }

@@ -28,7 +28,7 @@ SOFTWARE.
 
 @interface RCT_EXTERN_MODULE(Osc, RCTEventEmitter)
 RCT_EXTERN_METHOD(createClient:(NSString *)address port:(nonnull NSNumber *)port)
-RCT_EXTERN_METHOD(restartClient:()
+RCT_EXTERN_METHOD(restartClient)
 RCT_EXTERN_METHOD(sendMessage:(NSString *)address data:(NSArray *)data)
 RCT_EXTERN_METHOD(createServer:(nonnull NSNumber *)port)
 @end
