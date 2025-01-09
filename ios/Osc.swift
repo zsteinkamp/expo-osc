@@ -39,6 +39,8 @@ class OSCHandler: RCTEventEmitter, OSCDelegate {
         response["data"] = message.arguments
         sendEvent(withName: "GotMessage", body: response)
     }
+    func didReceive(_ data: Data) {}
+    func didReceive(_ bundle: OSCBundle) {}
     
       
     override func supportedEvents() -> [String]! {
