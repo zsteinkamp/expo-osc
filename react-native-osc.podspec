@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.dependency "React"
-  s.dependency 'https://github.com/soundflix/SwiftOSC.git'
+  s.dependency 'SwiftOSC.git'
   s.swift_version = '4.2'
 end
 
