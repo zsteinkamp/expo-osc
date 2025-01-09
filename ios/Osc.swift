@@ -23,6 +23,7 @@ SOFTWARE.
 
 
 import Foundation
+import Network
 import SwiftOSC
 
 class OSCHandler: RCTEventEmitter, OSCDelegate {
