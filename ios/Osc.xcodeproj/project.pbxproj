@@ -26,8 +26,8 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libOsc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOsc.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2C5A2FF884E136E18FBB42BA /* Pods-Osc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Osc.release.xcconfig"; path = "Pods/Target Support Files/Pods-Osc/Pods-Osc.release.xcconfig"; sourceTree = "<group>"; };
-		A94A5846DDCDD05877609854 /* Pods-Osc.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Osc.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Osc/Pods-Osc.debug.xcconfig"; sourceTree = "<group>"; };
+		2C5A2FF884E136E18FBB42BA /* Pods-Osc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Osc.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Osc/Pods-Osc.release.xcconfig"; sourceTree = "<group>"; };
+		A94A5846DDCDD05877609854 /* Pods-Osc.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Osc.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Osc/Pods-Osc.debug.xcconfig"; sourceTree = "<group>"; };
 		B3C8554636F12032832CE0F4 /* Pods_Osc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Osc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E7B5891CC2AC0600A0062D /* Osc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Osc.m; sourceTree = "<group>"; };
 		CB0EC27B2416F30300A37A61 /* Osc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Osc.swift; sourceTree = "<group>"; };
