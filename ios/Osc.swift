@@ -25,7 +25,16 @@ SOFTWARE.
 import Foundation
 import SwiftOSC
 
-@objc(Osc) class Osc : RCTEventEmitter, OSCDelegate {
+class OSCHandler: RCTEventEmitter, OSCDelegate {
+    func didReceive(_ message: OSCMessage) {
+        let response: NSMutableDictionary = [:]
+        response["address"] = message.address.string
+        response["data"] = message.arguments
+        sendEvent(withName: "GotMessage", body: response)
+    }
+}
+
+@objc(Osc) class Osc {
         
     var client:OSCClient!
     var server:OSCServer!
@@ -63,15 +72,9 @@ import SwiftOSC
     
     @objc(createServer:)
     func createServer(port: NSNumber) -> Void {
-        server = OSCServer(port: port.uint16Value, delegate: self)
+        server = OSCServer(port: port.uint16Value, delegate: OSCHandler())
     }
     
-    func didReceive(_ message: OSCMessage) {
-        let response: NSMutableDictionary = [:]
-        response["address"] = message.address.string
-        response["data"] = message.arguments
-        sendEvent(withName: "GotMessage", body: response)
-    }
       
     override func supportedEvents() -> [String]! {
       return ["GotMessage"]
