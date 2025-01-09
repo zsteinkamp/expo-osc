@@ -32,6 +32,12 @@ class OSCHandler: RCTEventEmitter, OSCDelegate {
         response["data"] = message.arguments
         sendEvent(withName: "GotMessage", body: response)
     }
+    func didReceive(_ message: OSCMessage, port: NWEndpoint.Port) {
+        let response: NSMutableDictionary = [:]
+        response["address"] = message.address.string
+        response["data"] = message.arguments
+        sendEvent(withName: "GotMessage", body: response)
+    }
     
       
     override func supportedEvents() -> [String]! {
