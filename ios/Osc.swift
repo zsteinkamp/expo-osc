@@ -44,12 +44,21 @@ class OSCHandler: RCTEventEmitter, OSCDelegate {
     }
     func didReceive(_ data: Data) {
         os_log("RECEIVE DATA")
+        let response: NSMutableDictionary = [:]
+        response["address"] = "/data"
+        sendEvent(withName: "GotMessage", body: response)
     }
     func didReceive(_ bundle: OSCBundle) {
         os_log("RECEIVE BUNDLE")
+        let response: NSMutableDictionary = [:]
+        response["address"] = "/bundle"
+        sendEvent(withName: "GotMessage", body: response)
     }
     func didReceive(_ bundle: OSCBundle, port: NWEndpoint.Port) {
         os_log("RECEIVE BUNDLEPORT")
+        let response: NSMutableDictionary = [:]
+        response["address"] = "/pbundle"
+        sendEvent(withName: "GotMessage", body: response)
     }
     
       
@@ -101,6 +110,14 @@ class OSCHandler: RCTEventEmitter, OSCDelegate {
     @objc(createServer:)
     func createServer(port: NSNumber) -> Void {
         server = OSCServer(port: port.uint16Value, delegate: OSCHandler())
+    }
+
+    @objc
+    func addListener(_ type: String) {
+    }
+
+    @objc
+    func removeListeners( _ type: String) {
     }
 }
 
