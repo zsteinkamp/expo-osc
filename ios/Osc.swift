@@ -32,9 +32,18 @@ class OSCHandler: RCTEventEmitter, OSCDelegate {
         response["data"] = message.arguments
         sendEvent(withName: "GotMessage", body: response)
     }
+    
+      
+    override func supportedEvents() -> [String]! {
+      return ["GotMessage"]
+    }
+    
+    override class func requiresMainQueueSetup() -> Bool {
+        return false
+    }
 }
 
-@objc(Osc) class Osc {
+@objc(Osc) class Osc : NSObject {
         
     var client:OSCClient!
     var server:OSCServer!
@@ -74,15 +83,5 @@ class OSCHandler: RCTEventEmitter, OSCDelegate {
     func createServer(port: NSNumber) -> Void {
         server = OSCServer(port: port.uint16Value, delegate: OSCHandler())
     }
-    
-      
-    override func supportedEvents() -> [String]! {
-      return ["GotMessage"]
-    }
-    
-    override class func requiresMainQueueSetup() -> Bool {
-        return false
-    }
-    
 }
 
