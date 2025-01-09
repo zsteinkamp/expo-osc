@@ -27,7 +27,47 @@ import Network
 import SwiftOSC
 import os
 
-class OSCHandler: RCTEventEmitter, OSCDelegate {
+@objc(Osc) class Osc : RCTEventEmitter, OSCDelegate {
+        
+    var client:OSCClient!
+    var server:OSCServer!
+    
+    @objc(createClient:port:)
+    func createClient(address: String, port: NSNumber) -> Void {
+        client = OSCClient(host: address, port: port.uint16Value)
+    }
+    
+    @objc(restartClient)
+    func restartClient() -> Void {
+        client.restart()
+    }
+    
+    @objc(sendMessage:data:)
+    func sendMessage(address: String, data: NSArray) -> Void {
+        let message = OSCMessage(OSCAddressPattern(address)!)
+        
+        for value in data {
+            switch value {
+                case let someInt as Int:
+                    message.add(someInt)
+                case let someDouble as Double where someDouble > 0:
+                    message.add(someDouble)
+                case let someBool as Bool:
+                    message.add(someBool)
+                case let someString as String:
+                    message.add(someString)
+                default:
+                    print("data not supported")
+            }
+        }
+        client.send(message)
+    }
+    
+    @objc(createServer:)
+    func createServer(port: NSNumber) -> Void {
+        server = OSCServer(port: port.uint16Value, delegate: self)
+    }
+
     let log = Logger(subsystem: "OSCHandler", category: "foo")
 
     func didReceive(_ message: OSCMessage) {
@@ -69,48 +109,6 @@ class OSCHandler: RCTEventEmitter, OSCDelegate {
     
     override class func requiresMainQueueSetup() -> Bool {
         return false
-    }
-}
-
-@objc(Osc) class Osc : NSObject {
-        
-    var client:OSCClient!
-    var server:OSCServer!
-    
-    @objc(createClient:port:)
-    func createClient(address: String, port: NSNumber) -> Void {
-        client = OSCClient(host: address, port: port.uint16Value)
-    }
-    
-    @objc(restartClient)
-    func restartClient() -> Void {
-        client.restart()
-    }
-    
-    @objc(sendMessage:data:)
-    func sendMessage(address: String, data: NSArray) -> Void {
-        let message = OSCMessage(OSCAddressPattern(address)!)
-        
-        for value in data {
-            switch value {
-                case let someInt as Int:
-                    message.add(someInt)
-                case let someDouble as Double where someDouble > 0:
-                    message.add(someDouble)
-                case let someBool as Bool:
-                    message.add(someBool)
-                case let someString as String:
-                    message.add(someString)
-                default:
-                    print("data not supported")
-            }
-        }
-        client.send(message)
-    }
-    
-    @objc(createServer:)
-    func createServer(port: NSNumber) -> Void {
-        server = OSCServer(port: port.uint16Value, delegate: OSCHandler())
     }
 }
 
