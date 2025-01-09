@@ -32,8 +32,12 @@ import SwiftOSC
     
     @objc(createClient:port:)
     func createClient(address: String, port: NSNumber) -> Void {
-        client = nil
         client = OSCClient(address: address, port: port.intValue)
+    }
+    
+    @objc(restartClient:)
+    func restartClient() -> Void {
+        client.restart()
     }
     
     @objc(sendMessage:data:)
@@ -61,7 +65,6 @@ import SwiftOSC
     func createServer(port: NSNumber) -> Void {
         server = OSCServer(port: port.intValue)
         server.delegate = self
-        server.start()
     }
     
     func didReceive(_ message: OSCMessage) {
