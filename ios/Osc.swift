@@ -25,14 +25,14 @@ SOFTWARE.
 import Foundation
 import SwiftOSC
 
-@objc(Osc) class Osc : RCTEventEmitter, OSCServerDelegate {
+@objc(Osc) class Osc : RCTEventEmitter, OSCDelegate {
         
     var client:OSCClient!
     var server:OSCServer!
     
     @objc(createClient:port:)
     func createClient(address: String, port: NSNumber) -> Void {
-        client = OSCClient(address: address, port: port.intValue)
+        client = OSCClient(host: address, port: port.uint16Value)
     }
     
     @objc(restartClient)
@@ -42,7 +42,7 @@ import SwiftOSC
     
     @objc(sendMessage:data:)
     func sendMessage(address: String, data: NSArray) -> Void {
-        let message = OSCMessage(OSCAddressPattern(address))
+        let message = OSCMessage(OSCAddressPattern(address!))
         
         for value in data {
             switch value {
@@ -63,8 +63,7 @@ import SwiftOSC
     
     @objc(createServer:)
     func createServer(port: NSNumber) -> Void {
-        server = OSCServer(port: port.intValue)
-        server.delegate = self
+        server = OSCServer(port: port.uint16Value, delegate: self)
     }
     
     func didReceive(_ message: OSCMessage) {
