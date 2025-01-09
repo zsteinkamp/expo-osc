@@ -25,23 +25,32 @@ SOFTWARE.
 import Foundation
 import Network
 import SwiftOSC
+import OSLog
 
 class OSCHandler: RCTEventEmitter, OSCDelegate {
     func didReceive(_ message: OSCMessage) {
+        os_log("RECEIVE MESSAGE")
         let response: NSMutableDictionary = [:]
         response["address"] = message.address.string
         response["data"] = message.arguments
         sendEvent(withName: "GotMessage", body: response)
     }
     func didReceive(_ message: OSCMessage, port: NWEndpoint.Port) {
+        os_log("RECEIVE MESSAGE PORT")
         let response: NSMutableDictionary = [:]
         response["address"] = message.address.string
         response["data"] = message.arguments
         sendEvent(withName: "GotMessage", body: response)
     }
-    func didReceive(_ data: Data) {}
-    func didReceive(_ bundle: OSCBundle) {}
-    func didReceive(_ bundle: OSCBundle, port: NWEndpoint.Port) {}
+    func didReceive(_ data: Data) {
+        os_log("RECEIVE DATA")
+    }
+    func didReceive(_ bundle: OSCBundle) {
+        os_log("RECEIVE BUNDLE")
+    }
+    func didReceive(_ bundle: OSCBundle, port: NWEndpoint.Port) {
+        os_log("RECEIVE BUNDLEPORT")
+    }
     
       
     override func supportedEvents() -> [String]! {
