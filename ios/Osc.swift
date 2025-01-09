@@ -26,36 +26,39 @@ import Foundation
 import Network
 import SwiftOSC
 import OSLog
+import os
 
 class OSCHandler: RCTEventEmitter, OSCDelegate {
+    let log = Logger(subsystem: "OSCHandler", category: "foo")
+
     func didReceive(_ message: OSCMessage) {
-        os_log("RECEIVE MESSAGE")
+        log.info("RECEIVE MESSAGE")
         let response: NSMutableDictionary = [:]
         response["address"] = message.address.string
         response["data"] = message.arguments
         sendEvent(withName: "GotMessage", body: response)
     }
     func didReceive(_ message: OSCMessage, port: NWEndpoint.Port) {
-        os_log("RECEIVE MESSAGE PORT")
+        log.info("RECEIVE MESSAGE PORT")
         let response: NSMutableDictionary = [:]
         response["address"] = message.address.string
         response["data"] = message.arguments
         sendEvent(withName: "GotMessage", body: response)
     }
     func didReceive(_ data: Data) {
-        os_log("RECEIVE DATA")
+        log.info("RECEIVE DATA")
         let response: NSMutableDictionary = [:]
         response["address"] = "/data"
         sendEvent(withName: "GotMessage", body: response)
     }
     func didReceive(_ bundle: OSCBundle) {
-        os_log("RECEIVE BUNDLE")
+        log.info("RECEIVE BUNDLE")
         let response: NSMutableDictionary = [:]
         response["address"] = "/bundle"
         sendEvent(withName: "GotMessage", body: response)
     }
     func didReceive(_ bundle: OSCBundle, port: NWEndpoint.Port) {
-        os_log("RECEIVE BUNDLEPORT")
+        log.info("RECEIVE BUNDLEPORT")
         let response: NSMutableDictionary = [:]
         response["address"] = "/pbundle"
         sendEvent(withName: "GotMessage", body: response)
@@ -110,14 +113,6 @@ class OSCHandler: RCTEventEmitter, OSCDelegate {
     @objc(createServer:)
     func createServer(port: NSNumber) -> Void {
         server = OSCServer(port: port.uint16Value, delegate: OSCHandler())
-    }
-
-    @objc
-    func addListener(_ type: String) {
-    }
-
-    @objc
-    func removeListeners( _ type: String) {
     }
 }
 
