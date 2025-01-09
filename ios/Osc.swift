@@ -41,6 +41,7 @@ class OSCHandler: RCTEventEmitter, OSCDelegate {
     }
     func didReceive(_ data: Data) {}
     func didReceive(_ bundle: OSCBundle) {}
+    func didReceive(_ bundle: OSCBundle, port: NWEndpoint.Port) {}
     
       
     override func supportedEvents() -> [String]! {
