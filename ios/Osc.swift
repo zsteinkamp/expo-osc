@@ -68,40 +68,16 @@ import os
         server = OSCServer(port: port.uint16Value, delegate: self)
     }
 
-    let log = Logger(subsystem: "OSCHandler", category: "foo")
-
     func didReceive(_ message: OSCMessage) {
-        log.info("RECEIVE MESSAGE")
         let response: NSMutableDictionary = [:]
         response["address"] = message.address.string
         response["data"] = message.arguments
         sendEvent(withName: "GotMessage", body: response)
     }
-    func didReceive(_ message: OSCMessage, port: NWEndpoint.Port) {
-        log.info("RECEIVE MESSAGE PORT")
-        let response: NSMutableDictionary = [:]
-        response["address"] = message.address.string
-        response["data"] = message.arguments
-        sendEvent(withName: "GotMessage", body: response)
-    }
-    func didReceive(_ data: Data) {
-        log.info("RECEIVE DATA")
-        let response: NSMutableDictionary = [:]
-        response["address"] = "/data"
-        sendEvent(withName: "GotMessage", body: response)
-    }
-    func didReceive(_ bundle: OSCBundle) {
-        log.info("RECEIVE BUNDLE")
-        let response: NSMutableDictionary = [:]
-        response["address"] = "/bundle"
-        sendEvent(withName: "GotMessage", body: response)
-    }
-    func didReceive(_ bundle: OSCBundle, port: NWEndpoint.Port) {
-        log.info("RECEIVE BUNDLEPORT")
-        let response: NSMutableDictionary = [:]
-        response["address"] = "/pbundle"
-        sendEvent(withName: "GotMessage", body: response)
-    }
+    func didReceive(_ message: OSCMessage, port: NWEndpoint.Port) {}
+    func didReceive(_ data: Data) {}
+    func didReceive(_ bundle: OSCBundle) {}
+    func didReceive(_ bundle: OSCBundle, port: NWEndpoint.Port) {}
     
     override func supportedEvents() -> [String]! {
       return ["GotMessage"]
