@@ -59,8 +59,7 @@ import SwiftOSC
     
     @objc(createServer:)
     func createServer(port: NSNumber) -> Void {
-        server = nil
-        server = OSCServer(address: "", port: port.intValue)
+        server = OSCServer(port: port.intValue)
         server.delegate = self
         server.start()
     }
