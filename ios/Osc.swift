@@ -70,7 +70,7 @@ class OSCHandler: RCTEventEmitter, OSCDelegate {
     
     @objc(sendMessage:data:)
     func sendMessage(address: String, data: NSArray) -> Void {
-        let message = OSCMessage(OSCAddressPattern(address ?? "/"))
+        let message = OSCMessage(OSCAddressPattern(address ?? "/")!)
         
         for value in data {
             switch value {
