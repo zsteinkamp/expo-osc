@@ -27,7 +27,7 @@ import Network
 import SwiftOSC
 import os
 
-class OSCHandler: OSCDelegate, RCTEventEmitter {
+class OSCHandler: RCTEventEmitter, OSCDelegate {
     let log = Logger(subsystem: "OSCHandler", category: "foo")
 
     func didReceive(_ message: OSCMessage) {
