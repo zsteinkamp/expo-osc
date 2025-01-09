@@ -25,10 +25,9 @@ SOFTWARE.
 import Foundation
 import Network
 import SwiftOSC
-import OSLog
 import os
 
-class OSCHandler: RCTEventEmitter, OSCDelegate {
+class OSCHandler: OSCDelegate, RCTEventEmitter {
     let log = Logger(subsystem: "OSCHandler", category: "foo")
 
     func didReceive(_ message: OSCMessage) {
@@ -64,7 +63,6 @@ class OSCHandler: RCTEventEmitter, OSCDelegate {
         sendEvent(withName: "GotMessage", body: response)
     }
     
-      
     override func supportedEvents() -> [String]! {
       return ["GotMessage"]
     }
@@ -91,7 +89,7 @@ class OSCHandler: RCTEventEmitter, OSCDelegate {
     
     @objc(sendMessage:data:)
     func sendMessage(address: String, data: NSArray) -> Void {
-        let message = OSCMessage(OSCAddressPattern(address ?? "/")!)
+        let message = OSCMessage(OSCAddressPattern(address)!)
         
         for value in data {
             switch value {
