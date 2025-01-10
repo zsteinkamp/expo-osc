@@ -64,7 +64,7 @@ import os
     }
     
     @objc(createServer:bonjourName:)
-    func createServer(port: NSNumber, bonjourName?: String) -> Void {
+    func createServer(port: NSNumber, bonjourName: String?) -> Void {
         server = OSCServer(port: port.uint16Value, delegate: self, bonjourName: bonjourName)
     }
 
