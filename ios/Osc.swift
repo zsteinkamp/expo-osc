@@ -65,7 +65,7 @@ import os
     
     @objc(createServer:bonjourName:)
     func createServer(port: NSNumber, bonjourName: String?) -> Void {
-        server = OSCServer(port: port.uint16Value, delegate: self, bonjourName: bonjourName)
+        server = OSCServer(port: port.uint16Value, bonjourName: bonjourName, delegate: self)
     }
 
     func didReceive(_ message: OSCMessage) {
