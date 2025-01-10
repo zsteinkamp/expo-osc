@@ -63,9 +63,9 @@ import os
         client.send(message)
     }
     
-    @objc(createServer:)
-    func createServer(port: NSNumber) -> Void {
-        server = OSCServer(port: port.uint16Value, delegate: self)
+    @objc(createServer:bonjourName:)
+    func createServer(port: NSNumber, bonjourName?: String) -> Void {
+        server = OSCServer(port: port.uint16Value, delegate: self, bonjourName: bonjourName)
     }
 
     func didReceive(_ message: OSCMessage) {
