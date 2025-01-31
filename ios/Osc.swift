@@ -42,6 +42,11 @@ import os
         client.restart()
     }
     
+    @objc(restartServer)
+    func restartServer() -> Void {
+        server.restart()
+    }
+
     @objc(sendMessage:data:)
     func sendMessage(address: String, data: NSArray) -> Void {
         let message = OSCMessage(OSCAddressPattern(address)!)
