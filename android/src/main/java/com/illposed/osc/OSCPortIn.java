@@ -74,6 +74,7 @@ public class OSCPortIn extends OSCPort implements Runnable {
 	 */
 	public OSCPortIn(final int port) throws SocketException {
 		this(new DatagramSocket(port));
+    getSocket().setReceiveBufferSize(1048576);
 	}
 
 	/**

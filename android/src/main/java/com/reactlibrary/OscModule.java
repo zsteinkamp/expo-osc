@@ -121,6 +121,16 @@ public class OscModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void restartServer(){
+        // nothing for now
+    }
+
+    @ReactMethod
+    public void restartClient(){
+        // nothing for now
+    }
+
+    @ReactMethod
     public void createServer(int port){
         portIn = port;
 
@@ -154,6 +164,7 @@ public class OscModule extends ReactContextBaseJavaModule {
 
 
             server.addListener("/*", listener);
+            server.addListener("/*/*", listener);
             server.startListening();
 
         } catch (Exception e){
