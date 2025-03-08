@@ -32,6 +32,8 @@ import os
     var client:OSCClient!
     var server:OSCServer!
     
+    //////////////////////////////////////
+    // CLIENT STUFF
     @objc(createClient:port:)
     func createClient(address: String, port: NSNumber) -> Void {
         client = OSCClient(host: address, port: port.uint16Value)
@@ -39,16 +41,17 @@ import os
     
     @objc(restartClient)
     func restartClient() -> Void {
+        if client == nil {
+            return
+        }
         client.restart()
     }
     
-    @objc(restartServer)
-    func restartServer() -> Void {
-        server.restart()
-    }
-
     @objc(sendMessage:data:)
     func sendMessage(address: String, data: NSArray) -> Void {
+        if client == nil {
+            return
+        }
         let message = OSCMessage(OSCAddressPattern(address)!)
         
         for value in data {
@@ -68,9 +71,19 @@ import os
         client.send(message)
     }
     
+    //////////////////////////////////////
+    // SERVER STUFF
     @objc(createServer:bonjourName:)
     func createServer(port: NSNumber, bonjourName: String?) -> Void {
         server = OSCServer(port: port.uint16Value, bonjourName: bonjourName, delegate: self)
+    }
+
+    @objc(restartServer)
+    func restartServer() -> Void {
+        if server == nil {
+            return
+        }
+        server.restart()
     }
 
     func didReceive(_ message: OSCMessage) {
