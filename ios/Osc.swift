@@ -102,6 +102,14 @@ import os
       return ["GotMessage"]
     }
     
+    override func invalidate() {
+        super.invalidate()
+        server?.stop()
+        server = nil
+        client?.connection?.cancel()
+        client = nil
+    }
+
     override class func requiresMainQueueSetup() -> Bool {
         return false
     }
