@@ -163,8 +163,7 @@ public class OscModule extends ReactContextBaseJavaModule {
             };
 
 
-            server.addListener("/*", listener);
-            server.addListener("/*/*", listener);
+            server.addListener("//", listener);
             server.startListening();
 
         } catch (Exception e){
