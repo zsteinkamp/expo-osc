@@ -52,6 +52,15 @@ import os
         if client == nil {
             return
         }
+        // Drop sends unless the connection is actually ready. During
+        // .waiting/.preparing (Wi-Fi dropped, app backgrounded, device asleep)
+        // UDP write requests queue into an unbounded nw_write_request chain that
+        // overflows the stack when the connection is later torn down
+        // (EXC_BAD_ACCESS / stack overflow in -[NWConcrete_nw_write_request
+        // dealloc]). NWConnection.State isn't Equatable, hence the `case` match.
+        guard let connection = client.connection, case .ready = connection.state else {
+            return
+        }
         let message = OSCMessage(OSCAddressPattern(address)!)
         
         for value in data {
