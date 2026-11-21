@@ -23,6 +23,12 @@ SOFTWARE.
 
 package com.reactlibrary;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.LinkAddress;
+import android.net.LinkProperties;
+import android.net.Network;
+
 import androidx.annotation.NonNull;
 
 import com.facebook.react.bridge.Arguments;
@@ -72,7 +78,26 @@ public class OscModule extends ReactContextBaseJavaModule {
         ipAddress = address;
         portOut = port;
 
-        try { client = new OSCPortOut(InetAddress.getByName(ipAddress), portOut);
+        try {
+            InetAddress host = InetAddress.getByName(ipAddress);
+            DatagramSocket socket = new DatagramSocket();
+            // Android routes an unbound socket through the DEFAULT network's
+            // table (usually Wi-Fi), so a host on a second network — a wired
+            // Ethernet adapter straight to the computer or Push — is
+            // unreachable even though eth0 has a route to it. Bind the socket
+            // to the network whose subnet holds the host. A host on the
+            // default network binds to that network: no change.
+            Network network = networkFor(host);
+            if (network != null) {
+                try {
+                    network.bindSocket(socket);
+                } catch (Exception e) {
+                    // Fall back to default routing.
+                }
+            }
+            OSCPortOut previous = client;
+            client = new OSCPortOut(host, portOut, socket);
+            if (previous != null) previous.close();
         } catch(UnknownHostException e) {
 
             return;
@@ -81,6 +106,37 @@ public class OscModule extends ReactContextBaseJavaModule {
             return;
         }
 
+    }
+
+    // The network with a local address in the same subnet as `host`, or null.
+    private Network networkFor(InetAddress host) {
+        ConnectivityManager cm = (ConnectivityManager)
+                reactContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) return null;
+        for (Network network : cm.getAllNetworks()) {
+            LinkProperties lp = cm.getLinkProperties(network);
+            if (lp == null) continue;
+            for (LinkAddress la : lp.getLinkAddresses()) {
+                if (sameSubnet(la.getAddress(), host, la.getPrefixLength())) {
+                    return network;
+                }
+            }
+        }
+        return null;
+    }
+
+    private static boolean sameSubnet(InetAddress a, InetAddress b, int prefix) {
+        byte[] x = a.getAddress();
+        byte[] y = b.getAddress();
+        if (x.length != y.length) return false;
+        int full = prefix / 8;
+        for (int i = 0; i < full; i++) {
+            if (x[i] != y[i]) return false;
+        }
+        int rem = prefix % 8;
+        if (rem == 0 || full >= x.length) return true;
+        int mask = (0xff << (8 - rem)) & 0xff;
+        return (x[full] & mask) == (y[full] & mask);
     }
 
     @ReactMethod
